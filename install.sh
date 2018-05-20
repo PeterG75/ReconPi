@@ -20,6 +20,15 @@ echo "[+] Getting the basics..";
 sudo apt-get update -y;
 sudo apt-get upgrade -y;
 
+echo "[+] Installing ReconPi..";
+cd ~;
+git clone https://github.com/x1mdev/ReconPi.git;
+# cd ReconPi;
+# chmod +x recon.sh;
+# Not needed, recon.sh and install.sh stay executable
+cd ~/tools/;
+echo "[+] Done.";
+
 echo "[+] Installing Git..";
 sudo apt-get install -y git;
 echo "[+] Git installation complete.";
@@ -81,25 +90,25 @@ sudo apt-get install -y nmap;
 cd ~/tools/;
 echo "[+] Done.";
 
-echo "[+] Installing ReconPi..";
-cd ~;
-git clone https://github.com/x1mdev/ReconPi.git;
-cd ReconPi;
-chmod +x recon.sh;
-cd ~/tools/;
-echo "[+] Done.";
+echo "[+] Final step.."
 
-#echo "[+] Installing bash_profile aliases from recon_profile..";
-#git clone https://github.com/nahamsec/recon_profile.git;
-#cd recon_profile;
-#cat bash_profile >> ~/.bash_profile;
-#source ~/.bash_profile;
-#cd ~/tools/;
-#echo "[+] Done.";
-
-#docker -v;
-#sudo systemctl status docker --no-pager;
-#echo "[+] Docker installation complete.";
+while printf "[+] Install aquatone-docker? This will take some extra time:N\b" # default N to continue script
+	  response=$(readkbd)
+	  printf "\r				\n"
+	  case "$response" in
+	  			Y|y) response="Y" ;; 
+				n|N|"") response="N" ;; # default = ENTER
+				*) response="N"	;;
+	  esac
+	  [ "$response" = "Y" ]
+do
+                                echo "[+] Installing aquatone-docker..";
+                                git clone https://github.com/x1mdev/aquatone-docker.git;
+                                cd aquatone-docker;
+                                docker build -t aquatone .;
+                                cd ~/tools/;
+                                echo "[+] Done.";
+fi
 
 sleep 1;
 ls -la;
