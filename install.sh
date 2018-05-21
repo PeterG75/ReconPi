@@ -92,6 +92,15 @@ echo "[+] Done.";
 
 echo "[+] Final step.."
 
+if [ -d tools ];then
+	# keypressed, read 1 char from stdin using dd
+	# works using any sh-shell
+	readkbd(){
+		stty -icanon -echo
+		dd bs=1 count=1 2>/dev/null
+		stty icanon echo
+}
+
 while printf "[+] Install aquatone-docker? This will take some extra time:N\b" # default N to continue script
 	  response=$(readkbd)
 	  printf "\r				\n"
@@ -107,6 +116,7 @@ do
                                 cd aquatone-docker;
                                 docker build -t aquatone .;
                                 cd ~/tools/;
+                                done;
                                 echo "[+] Done.";
 fi
 
